@@ -13,8 +13,12 @@ class wechatCallbackapiTest
 	public function valid()
     {
         $echoStr = $_GET["echostr"];
-
 		
+		$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT']; 
+		$fp = fopen("$DOCUMENT_ROOT/info.txt",'ab');
+		
+		fwrite($fp, $echoStr, strlen($echoStr));
+		fclose($fp);
         //valid signature , option
         if($this->checkSignature()){
         	echo $echoStr;
@@ -22,6 +26,8 @@ class wechatCallbackapiTest
         } else {
 			echo $echoStr;
 		}
+		
+		
     }
 
     public function responseMsg()
