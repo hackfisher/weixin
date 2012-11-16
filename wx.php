@@ -78,15 +78,15 @@ class wechatCallbackapiTest
 		$fp = fopen("$DOCUMENT_ROOT/debug.txt",'ab');
 		
 		$tab = "--------------";
-		fwrite($fp, $signature, strlen($echoStr));
+		fwrite($fp, $signature, strlen($signature));
 		fwrite($fp, $tab, strlen($tab));
-		fwrite($fp, $timestamp, strlen($echoStr));
+		fwrite($fp, $timestamp, strlen($timestamp));
 		fwrite($fp, $tab, strlen($tab));
-		fwrite($fp, $token, strlen($echoStr));
+		fwrite($fp, $token, strlen($token));
 		fwrite($fp, $tab, strlen($tab));
 		fwrite($fp, $echoStr, strlen($echoStr));
 		fwrite($fp, $tab, strlen($tab));
-		fwrite($fp, $tmpStr, strlen($echoStr));
+		fwrite($fp, $tmpStr, strlen($tmpStr));
 		
 		fclose($fp);
 		
