@@ -19,7 +19,9 @@ class wechatCallbackapiTest
         if($this->checkSignature()){
         	echo $echoStr;
 			exit;
-        }
+        } else {
+			echo $echoStr;
+		}
     }
 
     public function responseMsg()
