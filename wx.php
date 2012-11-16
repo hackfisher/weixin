@@ -6,7 +6,7 @@
 //define your token
 define("TOKEN", "hackfisher");
 $wechatObj = new wechatCallbackapiTest();
-$wechatObj->responseMsg();
+$wechatObj->valid();
 
 class wechatCallbackapiTest
 {
@@ -14,12 +14,12 @@ class wechatCallbackapiTest
     {
         $echoStr = $_GET["echostr"];
 
-		echo $echoStr;
-        exit;
+		
         //valid signature , option
-        //if($this->checkSignature()){
-        	
-        //}
+        if($this->checkSignature()){
+        	echo $echoStr;
+			exit;
+        }
     }
 
     public function responseMsg()
@@ -69,7 +69,9 @@ class wechatCallbackapiTest
 		$tmpArr = array($token, $timestamp, $nonce);
 		sort($tmpArr);
 		$tmpStr = implode( $tmpArr );
+		echo $tmpStr;
 		$tmpStr = sha1( $tmpStr );
+		echo $tmpStr;
 		
 		if( $tmpStr == $signature ){
 			return true;
