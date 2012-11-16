@@ -14,11 +14,12 @@ class wechatCallbackapiTest
     {
         $echoStr = $_GET["echostr"];
 
+		echo $echoStr;
+        exit;
         //valid signature , option
-        if($this->checkSignature()){
-        	echo $echoStr;
-        	exit;
-        }
+        //if($this->checkSignature()){
+        	
+        //}
     }
 
     public function responseMsg()
