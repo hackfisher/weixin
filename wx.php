@@ -6,7 +6,7 @@
 //define your token
 define("TOKEN", "hackfisher");
 $wechatObj = new wechatCallbackapiTest();
-$wechatObj->valid();
+$wechatObj->responseMsg();
 
 class wechatCallbackapiTest
 {
