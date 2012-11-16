@@ -14,11 +14,6 @@ class wechatCallbackapiTest
     {
         $echoStr = $_GET["echostr"];
 		
-		$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT']; 
-		$fp = fopen("$DOCUMENT_ROOT/info.txt",'ab');
-		
-		fwrite($fp, $echoStr, strlen($echoStr));
-		fclose($fp);
         //valid signature , option
         if($this->checkSignature()){
         	echo $echoStr;
@@ -78,6 +73,22 @@ class wechatCallbackapiTest
 		sort($tmpArr);
 		$tmpStr = implode( $tmpArr );
 		$tmpStr = sha1( $tmpStr );
+		
+		$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
+		$fp = fopen("$DOCUMENT_ROOT/debug.txt",'ab');
+		
+		$tab = "--------------"
+		fwrite($fp, $signature, strlen($echoStr));
+		fwrite($fp, $tab, strlen($tab));
+		fwrite($fp, $timestamp, strlen($echoStr));
+		fwrite($fp, $tab, strlen($tab));
+		fwrite($fp, $token, strlen($echoStr));
+		fwrite($fp, $tab, strlen($tab));
+		fwrite($fp, $echoStr, strlen($echoStr));
+		fwrite($fp, $tab, strlen($tab));
+		fwrite($fp, $tmpStr, strlen($echoStr));
+		
+		fclose($fp);
 		
 		if( $tmpStr == $signature ){
 			return true;
