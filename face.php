@@ -6,7 +6,7 @@ require_once(__DIR__ . "/FacePPClient.php");
 $api_key = "e336859e1099669c6662a3ca76c590b8";
 $api_secret = "HcMo_lQFQ4RZ1qrijxjjnzoHeNjxMc18";
 // initialize client object
-$api = new FacePPClientDemo($api_key, $api_secret);
+$api = new FacePPClient($api_key, $api_secret);
 
 // the list of person_name to train and recognize for
 $person_names = array("denny", "beauty");
