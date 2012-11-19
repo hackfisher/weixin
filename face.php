@@ -37,6 +37,7 @@ function detect(&$api, $person_name, &$face_ids)
     
     // detect faces in this photo
     $result = $api->face_detect($url);
+	echo $result;
     // skip errors
     if (empty($result->face))
         return false;
