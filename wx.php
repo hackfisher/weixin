@@ -6,7 +6,7 @@
 //define your token
 define("TOKEN", "hackfisher");
 $wechatObj = new wechatCallbackapiTest();
-$wechatObj->valid();
+$wechatObj->responseMsg();
 
 class wechatCallbackapiTest
 {
@@ -16,17 +16,15 @@ class wechatCallbackapiTest
 		
         //valid signature , option
         if($this->checkSignature()){
-        	echo $echoStr;
-			exit;
-        } else {
 			echo $echoStr;
+        } else {
+			exit;
 		}
-		
-		
     }
 
     public function responseMsg()
     {
+
 		//get post data, May be due to the different environments
 		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
@@ -49,7 +47,7 @@ class wechatCallbackapiTest
 				if(!empty( $keyword ))
                 {
               		$msgType = "text";
-                	$contentStr = "Welcome to Mars Robot!";
+                	$contentStr = "Hi, I'm Mars Robot! 有何贵干?";
                 	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 	echo $resultStr;
                 }else{
@@ -62,33 +60,28 @@ class wechatCallbackapiTest
         }
     }
 		
+
+	private function debug($text) {
+		$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
+		$fp = fopen("$DOCUMENT_ROOT/debug.txt",'ab');
+		$tab = "--------------";
+		fwrite($fp, $text, strlen($text));
+		fwrite($fp, $tab, strlen($tab));
+		fclose($fp);
+	}
 	private function checkSignature()
 	{
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];	
+
+		$this->debug($signature);
         		
 		$token = TOKEN;
 		$tmpArr = array($token, $timestamp, $nonce);
 		sort($tmpArr);
 		$tmpStr = implode( $tmpArr );
 		$tmpStr = sha1( $tmpStr );
-		
-		$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
-		$fp = fopen("$DOCUMENT_ROOT/debug.txt",'ab');
-		
-		$tab = "--------------";
-		fwrite($fp, $signature, strlen($signature));
-		fwrite($fp, $tab, strlen($tab));
-		fwrite($fp, $timestamp, strlen($timestamp));
-		fwrite($fp, $tab, strlen($tab));
-		fwrite($fp, $token, strlen($token));
-		fwrite($fp, $tab, strlen($tab));
-		fwrite($fp, $echoStr, strlen($echoStr));
-		fwrite($fp, $tab, strlen($tab));
-		fwrite($fp, $tmpStr, strlen($tmpStr));
-		
-		fclose($fp);
 		
 		if( $tmpStr == $signature ){
 			return true;
@@ -97,5 +90,4 @@ class wechatCallbackapiTest
 		}
 	}
 }
-
 ?>
