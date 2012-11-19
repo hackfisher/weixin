@@ -1,7 +1,7 @@
 ﻿  <?php
 define ("DEBUG_MODE", false);
 
-class FacePPClientDemo
+class FacePPClient
 {	
 	private $api_server_url;
 	private $auth_params;
