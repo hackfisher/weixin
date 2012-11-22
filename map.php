@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once(__DIR__ . "/BaiduMapClient.php");
 
 $api_key = "0e4fde2b4acbc043abdb68df511359ae";

@@ -1,4 +1,4 @@
-  <?php
+﻿  <?php
 define ("DEBUG_MODE", false);
 
 class BaiduMapClient
@@ -54,7 +54,7 @@ class BaiduMapClient
     	curl_setopt($ch, CURLOPT_URL, $url);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
      	$data = curl_exec($ch);
-		$data = mb_convert_encoding($data, "GBK", "UTF-8");
+		//$data = mb_convert_encoding($data, "GBK", "UTF-8");
     	curl_close($ch);    
     	
 		$result = null;
@@ -64,7 +64,7 @@ class BaiduMapClient
 			{
 				echo "RETURN: " . $data . "\n";
 			}
-			$result = json_decode($data);
+			$result = $data;//json_decode($data);
 		}
 		
 		return $result;

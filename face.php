@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // load php_client_demo, this can be downloaded from our website(http://api.face-plus-plus.com/docs/download/sdk)
 require_once(__DIR__ . "/FacePPClient.php");
 

@@ -1,4 +1,6 @@
-<?php
+﻿<?php
+
+require_once(__DIR__ . "/BaiduMapClient.php");
 /**
   * wechat php test
   */
@@ -35,7 +37,6 @@ class wechatCallbackapiTest
                 $fromUsername = $postObj->FromUserName;
                 $toUsername = $postObj->ToUserName;
 				$msgType = $postObj->MsgType;
-				$resultStr = $msgType;
 				if ($msgType=="text") {
 					$keyword = trim($postObj->Content);
 					$time = time();
@@ -51,7 +52,7 @@ class wechatCallbackapiTest
 					{
 						$msgType = "text";
 						$contentStr = "Hi, I'm Mars Robot! 有何贵干?";
-						$resultStr = $resultStr . sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+						$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
 						echo $resultStr;
 					}else{
 						echo "Input something...";
@@ -70,15 +71,13 @@ class wechatCallbackapiTest
 								<Content><![CDATA[%s]]></Content>
 								<FuncFlag>0</FuncFlag>
 								</xml>";
-					$resultStr = $resultStr . "befor_require" . $location_x.",".$location_y";
-					require_once(__DIR__ . "/BaiduMapClient.php");
 					$api_key = "0e4fde2b4acbc043abdb68df511359ae";
 					// initialize client object
 					$api = new BaiduMapClient($api_key);
 					$result = $api->geocoder_location($location_x.",".$location_y);
 					if (!empty($result)) {
 						$msgType = "text";
-						$resultStr = $resultStr . sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $result);
+						$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $label . $result);
 						echo $resultStr;
 					}
 				} else {
