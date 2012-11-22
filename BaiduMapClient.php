@@ -48,6 +48,9 @@ class BaiduMapClient
 		}
 		
     	$ch = curl_init();
+		
+		$this_header = array("content-type: text/javascript;charset=utf-8");
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $this_header);
     	curl_setopt($ch, CURLOPT_URL, $url);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
      	$data = curl_exec($ch);
