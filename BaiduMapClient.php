@@ -20,17 +20,17 @@ class BaiduMapClient
 	public function place_search($query, $location, $radius) 
 	{
 		return $this->call("place/search", array("query" => $query,
-														 "location" => $location, "radius" => $radius));
+														 "location" => $location, "radius" => $radius, "output" => "json"));
 	}
 	
 	public function geocoder_address($address) 
 	{
-		return $this->call("geocoder", array("address" => $address));
+		return $this->call("geocoder", array("address" => $address, "output" => "json"));
 	}
 	
 	public function geocoder_location($location) 
 	{
-		return $this->call("geocoder", array("location" => $location));
+		return $this->call("geocoder", array("location" => $location, "output" => "json"));
 	}
 	
 	//////////////////////////////////////////////////////////
