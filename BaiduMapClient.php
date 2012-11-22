@@ -1,5 +1,5 @@
   <?php
-define ("DEBUG_MODE", true);
+define ("DEBUG_MODE", false);
 
 class BaiduMapClient
 {	
@@ -49,11 +49,12 @@ class BaiduMapClient
 		
     	$ch = curl_init();
 		
-		$this_header = array("content-type: text/javascript;charset=utf-8");
+		$this_header = array("content-type: text/javascript;charset=utf-8", "Accept-Charset:GBK,utf-8");
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $this_header);
     	curl_setopt($ch, CURLOPT_URL, $url);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
      	$data = curl_exec($ch);
+		$data = mb_convert_encoding($data, "GBK", "UTF-8");
     	curl_close($ch);    
     	
 		$result = null;
