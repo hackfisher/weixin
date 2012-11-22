@@ -1,0 +1,70 @@
+  <?php
+define ("DEBUG_MODE", true);
+
+class BaiduMapClient
+{	
+	private $api_server_url;
+	private $auth_params;
+
+	public function __construct($api_key)
+	{
+		$this->api_server_url = "http://api.map.baidu.com/";
+    	$this->auth_params = array();
+   		$this->auth_params['key'] = $api_key;
+	}
+	
+	//////////////////////////////////////////////////////////
+	// public mathods
+	//////////////////////////////////////////////////////////
+	
+	public function place_search($query, $location, $radius) 
+	{
+		return $this->call("place/search", array("query" => $query,
+														 "location" => $location, "radius" => $radius));
+	}
+	
+	public function geocoder_address($address) 
+	{
+		return $this->call("geocoder", array("address" => $address));
+	}
+	
+	public function geocoder_location($location) 
+	{
+		return $this->call("geocoder", array("location" => $location));
+	}
+	
+	//////////////////////////////////////////////////////////
+	// private mathods
+	//////////////////////////////////////////////////////////
+	
+    protected function call($method, $params = array())
+    {
+    	$params = array_merge($this->auth_params, $params);
+		$url = $this->api_server_url . "$method?".http_build_query($params);
+		
+		if (DEBUG_MODE)
+		{
+			echo "REQUEST: $url" . "\n";
+		}
+		
+    	$ch = curl_init();
+    	curl_setopt($ch, CURLOPT_URL, $url);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+     	$data = curl_exec($ch);
+    	curl_close($ch);    
+    	
+		$result = null;
+		if (!empty($data))
+		{
+			if (DEBUG_MODE)
+			{
+				echo "RETURN: " . $data . "\n";
+			}
+			$result = json_decode($data);
+		}
+		
+		return $result;
+
+    }
+}
+?>
