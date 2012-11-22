@@ -1,4 +1,5 @@
-﻿  <?php
+﻿<?php
+header("Content-type: text/html; charset=utf-8");
 define ("DEBUG_MODE", false);
 
 class BaiduMapClient
