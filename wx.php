@@ -55,10 +55,10 @@ class wechatCallbackapiTest
 						// initialize client object
 						$api = new BaiduTranslateClient($api_key);
 						$result = $api->translate($keyword, "auto", "auto");
-						$contentStr = "Translation Failed!"
+						$contentStr = "Translation Failed!";
 						if (!empty($result->trans_result)) {
-							if (!empty($result->trans_result->dst)) {
-								$contentStr = $result->trans_result->dst;
+							if (count($result->trans_result) > 0) {
+								$contentStr = $result->trans_result[0]->dst;
 							}
 						}
 						$msgType = "text";
