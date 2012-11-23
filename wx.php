@@ -1,6 +1,7 @@
 ﻿<?php
 
 require_once(__DIR__ . "/BaiduMapClient.php");
+require_once(__DIR__ . "/BaiduTranslateClient.php");
 /**
   * wechat php test
   */
@@ -50,8 +51,18 @@ class wechatCallbackapiTest
 								</xml>";             
 					if(!empty( $keyword ))
 					{
+						$api_key = "SEwcXuDQE7ZcGM0Fxz2B02zb";
+						// initialize client object
+						$api = new BaiduTranslateClient($api_key);
+						$result = $api->translate($keyword, "auto", "auto");
+						$contentStr = "Translation Failed!"
+						if (!empty($result->trans_result)) {
+							if (!empty($result->trans_result->dst)) {
+								$contentStr = $result->trans_result->dst;
+							}
+						}
 						$msgType = "text";
-						$contentStr = "Hi, I'm Mars Robot! 有何贵干? 你可以发送位置，试试看。";
+						//$contentStr = "Hi, I'm Mars Robot! 有何贵干? 你可以发送位置，试试看。";
 						$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
 						echo $resultStr;
 					}else{
