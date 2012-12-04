@@ -142,6 +142,18 @@ class wechatCallbackapiTest
 							$msgType = "news";
 							$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, getPhotoUrl($result), "http://hackfisher.info");
 							echo $resultStr;
+						} else {
+							$textTpl = "<xml>
+									<ToUserName><![CDATA[%s]]></ToUserName>
+									<FromUserName><![CDATA[%s]]></FromUserName>
+									<CreateTime>%s</CreateTime>
+									<MsgType><![CDATA[%s]]></MsgType>
+									<Content><![CDATA[%s]]></Content>
+									<FuncFlag>0</FuncFlag>
+									</xml>";
+							$msgType = "text";
+							$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, "No Similar Pictures");
+							echo $resultStr;
 						}
 						// do train job
 						$api->group_add_person($person_name, $group);
