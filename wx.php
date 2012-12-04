@@ -230,7 +230,6 @@ class wechatCallbackapiTest
             if (!empty($ext)) {
                 $filepath .= ".$ext";
                 //如果目录不存在，则先要创建目录
-                CFiles::createDirectory(dirname($filepath));
                 $local_file = fopen($filepath, 'w');
                 if (false !== $local_file) {
                     if (false !== fwrite($local_file, $body)) {
