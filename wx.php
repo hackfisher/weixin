@@ -1,5 +1,5 @@
 ﻿<?php
-
+define ("DEBUG_MODE", false);
 require_once(__DIR__ . "/BaiduMapClient.php");
 require_once(__DIR__ . "/BaiduTranslateClient.php");
 require_once(__DIR__ . "/FacePPClient.php");
@@ -102,6 +102,7 @@ class wechatCallbackapiTest
 					$person_name = md5(time().rand());
 					$file_name = $this->getFileByWget($url, $person_name . ".jpg");
 					// do search by url_img
+					$group = "sample_group";
 					$face_ids = array();
 					detect($api, $person_name, $face_ids);
 					$result = recognize($api, $person_name, $group);
@@ -128,7 +129,6 @@ class wechatCallbackapiTest
 						echo $resultStr;
 					}
 					// do train job
-					$group = "sample_group";
 					$api->group_add_person($person_name, $group);
 					train($api, $group);
 				} else {

@@ -1,5 +1,5 @@
 ﻿  <?php
-define ("DEBUG_MODE", false);
+//define ("DEBUG_MODE", false);
 
 class FacePPClient
 {	
