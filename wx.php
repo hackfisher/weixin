@@ -229,16 +229,18 @@ class wechatCallbackapiTest
             //保存文件
             if (!empty($ext)) {
                 $filepath .= ".$ext";
-                //如果目录不存在，则先要创建目录
-                $local_file = fopen($filepath, 'w');
-                if (false !== $local_file) {
-                    if (false !== fwrite($local_file, $body)) {
-                        fclose($local_file);
-                        $sizeinfo = getimagesize($filepath);
-                        return array('filepath' => realpath($filepath), 'width' => $sizeinfo[0], 'height' => $sizeinfo[1], 'orginalfilename' => $originalfilename, 'filename' => pathinfo($filepath, PATHINFO_BASENAME));
-                    }
-                }
-            }
+            } else {
+				$filepath .= ".jpg";
+			}
+			
+			$local_file = fopen($filepath, 'w');
+			if (false !== $local_file) {
+				if (false !== fwrite($local_file, $body)) {
+					fclose($local_file);
+					$sizeinfo = getimagesize($filepath);
+					return array('filepath' => realpath($filepath), 'width' => $sizeinfo[0], 'height' => $sizeinfo[1], 'orginalfilename' => $originalfilename, 'filename' => pathinfo($filepath, PATHINFO_BASENAME));
+				}
+			}
         }
         return false;
     }
