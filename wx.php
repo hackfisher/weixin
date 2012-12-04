@@ -129,7 +129,7 @@ class wechatCallbackapiTest
 					}
 					// do train job
 					$group = "sample_group";
-					$api->group_add_person($person_name, $group_name);
+					$api->group_add_person($person_name, $group);
 					train($api, $group);
 				} else {
 					echo "";
