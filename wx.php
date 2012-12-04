@@ -101,38 +101,52 @@ class wechatCallbackapiTest
 					$api = new FacePPClient($api_key, $api_secret);			
 					$person_name = md5(time().rand());
 					//$file_name = $this->getFileByWget($url, $person_name . ".jpg");
-					$this->downloadImage($url, "/home/clasix/sites/weixin/images/" . $person_name);
-					//
-					// do search by url_img
-					$group = "sample_group";
-					$face_ids = array();
-					detect($api, $person_name, $face_ids);
-					$result = recognize($api, $person_name, $group);
-					if (!empty($result)) {
+					$ret = $this->downloadImage($url, "/home/clasix/sites/weixin/images/" . $person_name);
+					if (!$ret) {
 						$textTpl = "<xml>
-								 <ToUserName><![CDATA[%s]]></ToUserName>
-								 <FromUserName><![CDATA[%s]]></FromUserName>
-								 <CreateTime>%s</CreateTime>
-								 <MsgType><![CDATA[%s]]></MsgType>
-								 <Content><![CDATA[Similar Pic]]></Content>
-								 <ArticleCount>1</ArticleCount>
-								 <Articles>
-								 <item>
-								 <Title><![CDATA[Similar Pic]]></Title>
-								 <Description><![CDATA[nothing]]></Description>
-								 <PicUrl><![CDATA[%s]]></PicUrl>
-								 <Url><![CDATA[%s]]></Url>
-								 </item>
-								 </Articles>
-								 <FuncFlag>0</FuncFlag>
-								 </xml>";
-						$msgType = "news";
-						$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, getPhotoUrl($result), "http://hackfisher.info");
+								<ToUserName><![CDATA[%s]]></ToUserName>
+								<FromUserName><![CDATA[%s]]></FromUserName>
+								<CreateTime>%s</CreateTime>
+								<MsgType><![CDATA[%s]]></MsgType>
+								<Content><![CDATA[%s]]></Content>
+								<FuncFlag>0</FuncFlag>
+								</xml>";
+						$msgType = "text";
+						$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, "File Download Failed!");
 						echo $resultStr;
+					} else {
+						//
+						// do search by url_img
+						$group = "sample_group";
+						$face_ids = array();
+						detect($api, $person_name, $face_ids);
+						$result = recognize($api, $person_name, $group);
+						if (!empty($result)) {
+							$textTpl = "<xml>
+									 <ToUserName><![CDATA[%s]]></ToUserName>
+									 <FromUserName><![CDATA[%s]]></FromUserName>
+									 <CreateTime>%s</CreateTime>
+									 <MsgType><![CDATA[%s]]></MsgType>
+									 <Content><![CDATA[Similar Pic]]></Content>
+									 <ArticleCount>1</ArticleCount>
+									 <Articles>
+									 <item>
+									 <Title><![CDATA[Similar Pic]]></Title>
+									 <Description><![CDATA[nothing]]></Description>
+									 <PicUrl><![CDATA[%s]]></PicUrl>
+									 <Url><![CDATA[%s]]></Url>
+									 </item>
+									 </Articles>
+									 <FuncFlag>0</FuncFlag>
+									 </xml>";
+							$msgType = "news";
+							$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, getPhotoUrl($result), "http://hackfisher.info");
+							echo $resultStr;
+						}
+						// do train job
+						$api->group_add_person($person_name, $group);
+						train($api, $group);
 					}
-					// do train job
-					$api->group_add_person($person_name, $group);
-					train($api, $group);
 				} else {
 					echo "";
 					exit;
