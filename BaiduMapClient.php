@@ -1,5 +1,5 @@
 ﻿<?php
-//define ("DEBUG_MODE", false);
+define ("BMC_DEBUG_MODE", false);
 
 class BaiduMapClient
 {	
@@ -42,7 +42,7 @@ class BaiduMapClient
     	$params = array_merge($this->auth_params, $params);
 		$url = $this->api_server_url . "$method?".http_build_query($params);
 		
-		if (DEBUG_MODE)
+		if (BMC_DEBUG_MODE)
 		{
 			echo "REQUEST: $url" . "\n";
 		}
@@ -60,7 +60,7 @@ class BaiduMapClient
 		$result = null;
 		if (!empty($data))
 		{
-			if (DEBUG_MODE)
+			if (BMC_DEBUG_MODE)
 			{
 				echo "RETURN: " . $data . "\n";
 			}

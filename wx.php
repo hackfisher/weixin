@@ -1,5 +1,4 @@
 ﻿<?php
-define ("DEBUG_MODE", false);
 require_once(__DIR__ . "/BaiduMapClient.php");
 require_once(__DIR__ . "/BaiduTranslateClient.php");
 require_once(__DIR__ . "/FacePPClient.php");
@@ -127,7 +126,7 @@ class wechatCallbackapiTest
 									 <FromUserName><![CDATA[%s]]></FromUserName>
 									 <CreateTime>%s</CreateTime>
 									 <MsgType><![CDATA[%s]]></MsgType>
-									 <Content><![CDATA[Similar Pic]]></Content>
+									 <Content><![CDATA[]]></Content>
 									 <ArticleCount>1</ArticleCount>
 									 <Articles>
 									 <item>
@@ -140,7 +139,7 @@ class wechatCallbackapiTest
 									 <FuncFlag>0</FuncFlag>
 									 </xml>";
 							$msgType = "news";
-							$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, getPhotoUrl($result), "http://hackfisher.info");
+							$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, getWeiXinUrl($result), getWeiXinUrl($result));
 							echo $resultStr;
 						} else {
 							$textTpl = "<xml>
@@ -202,8 +201,12 @@ class wechatCallbackapiTest
      * @return mixed 下载成功返回一个描述图片信息的数组，下载失败则返回false
      */
     function downloadImage($url, $filepath) {
-        $fp = fopen($filepath.'.jpg', 'w');
-		fwrite($fp, file_get_contents($url));
+		$ch = curl_init($url);
+        $fp = fopen($filepath.'.jpg', 'wb');
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_exec($ch);
+		curl_close($ch);
 		fclose($fp);
 		return true;
     }
@@ -308,6 +311,8 @@ function recognize(&$api, $person_name, $group_name)
 	// print result
 	foreach ($face->candidate as $candidate) 
 		return $candidate->person_name;
+	
+	return "";
 }
 
 /*
@@ -338,5 +343,11 @@ function getPhotoUrl($person_name)
 {
 	// TODO: here is just the fake url
 	return "http://nf.hackfisher.info/wximages/".$person_name.".jpg";
+}
+
+function getWeiXinUrl($person_name)
+{
+	// TODO: here is just the fake url
+	return "http://weixin.hackfisher.info/images/".$person_name.".jpg";
 }
 ?>

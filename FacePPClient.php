@@ -1,5 +1,5 @@
 ﻿  <?php
-//define ("DEBUG_MODE", false);
+define ("F_DEBUG_MODE", false);
 
 class FacePPClient
 {	
@@ -71,7 +71,7 @@ class FacePPClient
     	$params = array_merge($this->auth_params, $params);
 		$url = $this->api_server_url . "$method?".http_build_query($params);
 		
-		if (DEBUG_MODE)
+		if (F_DEBUG_MODE)
 		{
 			echo "REQUEST: $url" . "\n";
 		}
@@ -85,7 +85,7 @@ class FacePPClient
 		$result = null;
 		if (!empty($data))
 		{
-			if (DEBUG_MODE)
+			if (F_DEBUG_MODE)
 			{
 				echo "RETURN: " . $data . "\n";
 			}
